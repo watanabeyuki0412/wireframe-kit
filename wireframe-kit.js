@@ -1,8 +1,8 @@
-/*! Wireframe Kit runtime v1.1.3 — 表紙・コメント・PNG書き出し */
+/*! Wireframe Kit runtime v1.2.0 — 表紙・コメント・PNG書き出し */
 (function(){
 if(window.__wfkit)return;window.__wfkit=true;
-var WFK_STYLE="\n#wf-comment-ui{font-family:'Helvetica Neue','Hiragino Kaku Gothic ProN',sans-serif;font-size:13px;}\n#wf-toolbar{position:fixed;top:0;left:0;right:0;z-index:9000;background:#fff;border-bottom:1px solid #e0e0e0;padding:8px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);overflow-x:auto;}\n@media(max-width:900px){.wft-hint{display:none!important;}}\n#wf-toolbar .wft-label{font-size:10px;font-weight:700;letter-spacing:.2em;color:#bbb;}\n.wft-btn{white-space:nowrap;flex-shrink:0;display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid #ddd;background:#fff;color:#555;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;border-radius:4px;transition:all .15s;}\n.wft-btn:hover{border-color:#111;color:#111;}\n.wft-btn.on{background:#111;color:#fff;border-color:#111;}\n.wft-spacer{flex:1;}\n.wft-hint{font-size:11px;color:#bbb;}\n#wf-sidebar{position:fixed;right:0;top:41px;bottom:0;width:260px;background:#fff;border-left:1px solid #e0e0e0;z-index:8900;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .2s;}\n#wf-sidebar.open{transform:translateX(0);}\n.wfs-head{padding:12px 16px;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;justify-content:space-between;}\n.wfs-title{font-size:11px;font-weight:700;letter-spacing:.1em;color:#555;}\n.wfs-close{background:none;border:none;cursor:pointer;font-size:16px;color:#aaa;line-height:1;}\n.wfs-body{flex:1;overflow-y:auto;}\n.wfs-footer{padding:10px 14px;border-top:1px solid #f0f0f0;text-align:right;}\n.wfs-show-resolved{background:none;border:none;font-size:10px;color:#aaa;cursor:pointer;font-family:inherit;padding:0;}\n.wfs-show-resolved:hover{color:#555;}\n.wfs-empty{font-size:12px;color:#bbb;text-align:center;padding:24px 0;}\n.wfs-item{padding:10px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;display:flex;gap:10px;}\n.wfs-item:hover{background:#fafafa;}\n.wfs-item.active{background:#EBF4FF;}\n.wfs-item.resolved{opacity:.4;}\n.wfs-item.resolved:hover{background:#fafafa;opacity:.6;}\n.wfs-pin{width:22px;height:22px;border-radius:50% 50% 50% 0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;transform:rotate(-45deg);}\n.wfs-pin span{transform:rotate(45deg);}\n.wfs-info{flex:1;min-width:0;}\n.wfs-author{font-size:11px;font-weight:700;color:#222;}\n.wfs-text{font-size:11px;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}\n.wfs-meta{font-size:10px;color:#bbb;margin-top:2px;}\n.wf-pin{position:absolute;width:26px;height:26px;border-radius:50% 50% 50% 0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;cursor:grab;transform:rotate(-45deg);z-index:8000;transition:opacity .15s;user-select:none;}\n.wf-pin span{transform:rotate(45deg);}\n.wf-pin:hover{opacity:.8;}\n.wf-pin:active{cursor:grabbing;}\n.wf-pin.wf-flash{animation:wfFlash .6s ease 3;}\n@keyframes wfFlash{0%,100%{box-shadow:0 0 0 0 rgba(55,138,221,.7);}50%{box-shadow:0 0 0 12px rgba(55,138,221,0);}}\n.wf-pop{position:absolute;z-index:8500;background:#fff;border:1px solid #ddd;border-radius:6px;width:280px;box-shadow:0 4px 16px rgba(0,0,0,.12);max-height:480px;display:flex;flex-direction:column;}\n.wf-pop-head{padding:8px 12px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}\n.wf-pop-author{font-size:11px;font-weight:700;color:#222;}\n.wf-pop-time{font-size:10px;color:#bbb;}\n.wf-pop-close{background:none;border:none;cursor:pointer;color:#aaa;font-size:15px;line-height:1;}\n.wf-pop-threads{overflow-y:auto;flex:1;}\n.wf-pop-body{padding:10px 12px;border-bottom:1px solid #f0f0f0;}\n.wf-pop-text{font-size:12px;color:#333;line-height:1.6;margin-bottom:8px;word-break:break-all;}\n.wf-pop-actions{display:flex;gap:10px;}\n.wf-pop-resolve{font-size:11px;color:#1D9E75;cursor:pointer;font-weight:700;}\n.wf-pop-delete{font-size:11px;color:#bbb;cursor:pointer;}\n.wf-reply-item{padding:8px 12px;border-bottom:1px solid #f8f8f8;display:flex;gap:8px;}\n.wf-reply-avatar{width:20px;height:20px;border-radius:50%;background:#e0e0e0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#888;flex-shrink:0;}\n.wf-reply-body{flex:1;min-width:0;}\n.wf-reply-author{font-size:10px;font-weight:700;color:#222;}\n.wf-reply-time{font-size:10px;color:#bbb;margin-left:6px;}\n.wf-reply-text{font-size:11px;color:#444;line-height:1.6;margin-top:2px;word-break:break-all;}\n.wf-reply-input{padding:8px 10px;border-top:1px solid #f0f0f0;display:flex;gap:6px;align-items:flex-end;flex-shrink:0;}\n.wf-reply-input textarea{flex:1;border:1px solid #e0e0e0;border-radius:4px;padding:6px 8px;font-size:11px;font-family:inherit;resize:none;min-height:32px;max-height:80px;outline:none;color:#333;line-height:1.5;}\n.wf-reply-input textarea:focus{border-color:#378ADD;}\n.wf-reply-send{width:28px;height:28px;background:#378ADD;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}\n.wf-reply-send:disabled{background:#ddd;cursor:default;}\n.wf-reply-send svg{width:12px;height:12px;fill:#fff;}\n.wf-input-pop{position:absolute;z-index:8500;background:#fff;border:1px solid #ddd;border-radius:6px;width:260px;box-shadow:0 4px 16px rgba(0,0,0,.12);}\n.wf-input-pop textarea{width:100%;border:none;padding:10px 12px;font-size:12px;font-family:inherit;resize:none;min-height:72px;outline:none;color:#333;display:block;border-radius:6px 6px 0 0;}\n.wf-input-foot{padding:6px 10px;border-top:1px solid #f0f0f0;display:flex;align-items:center;gap:6px;}\n.wf-input-foot-r{margin-left:auto;display:flex;gap:6px;}\n.wf-btn-cancel{background:none;border:1px solid #ddd;padding:4px 10px;font-size:11px;cursor:pointer;font-family:inherit;border-radius:4px;color:#666;}\n.wf-btn-post{background:#111;color:#fff;border:none;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;border-radius:4px;}\n.wf-btn-post:disabled{opacity:.3;cursor:default;}\n.wf-img-btn{background:none;border:none;cursor:pointer;padding:2px 4px;color:#bbb;font-size:15px;line-height:1;border-radius:3px;}\n.wf-img-btn:hover{color:#555;background:#f5f5f5;}\n.wf-img-btn svg{display:block;}\n.wf-img-preview{padding:6px 10px;display:flex;flex-wrap:wrap;gap:6px;}\n.wf-img-thumb{position:relative;width:60px;height:60px;}\n.wf-img-thumb img{width:100%;height:100%;object-fit:cover;border-radius:4px;border:1px solid #e0e0e0;}\n.wf-img-thumb-del{position:absolute;top:-5px;right:-5px;width:16px;height:16px;background:#555;color:#fff;border:none;border-radius:50%;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}\n.wf-comment-img{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}\n.wf-comment-img img{max-width:100%;max-height:160px;object-fit:cover;border-radius:4px;border:1px solid #e8e8e8;cursor:pointer;}\n.wf-comment-img img:hover{opacity:.85;}\n.wf-reply-img{margin-top:4px;display:flex;flex-wrap:wrap;gap:4px;}\n.wf-reply-img img{max-width:120px;max-height:80px;object-fit:cover;border-radius:3px;border:1px solid #e8e8e8;cursor:pointer;}\n.wf-img-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:99999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;}\n.wf-img-lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:4px;}\n.wf-reply-input-row{display:flex;gap:6px;align-items:flex-end;}\n.wf-reply-input-row textarea{flex:1;border:1px solid #e0e0e0;border-radius:4px;padding:6px 8px;font-size:11px;font-family:inherit;resize:none;min-height:32px;max-height:80px;outline:none;color:#333;line-height:1.5;}\n.wf-reply-input-row textarea:focus{border-color:#378ADD;}\n.wfs-reply-count{font-size:10px;color:#378ADD;margin-top:2px;}\n.wf-has-img{font-size:10px;color:#bbb;margin-top:2px;}\nbody.comment-mode{cursor:crosshair;}\nbody.comment-mode a,body.comment-mode button{cursor:crosshair!important;}\n";
-var WFK_UI="<div id=\"wf-comment-ui\">\n<div id=\"wf-toolbar\">\n  <span class=\"wft-label\">WIREFRAME</span>\n  <button class=\"wft-btn on\" id=\"wft-view\" onclick=\"wfSetMode('view')\">閲覧</button>\n  <button class=\"wft-btn\" id=\"wft-comment\" onclick=\"wfSetMode('comment')\">コメント</button>\n  <div class=\"wft-spacer\"></div>\n  <span class=\"wft-hint\" id=\"wft-hint\">クリックでコメントを追加</span>\n  <button class=\"wft-btn\" onclick=\"wfExportPng()\" id=\"wft-png-btn\">PNG書き出し</button>\n  <button class=\"wft-btn\" onclick=\"wfToggleSidebar()\" id=\"wft-sb-btn\">コメント一覧 (<span id=\"wft-count\">0</span>)</button>\n</div>\n<div id=\"wf-sidebar\">\n  <div class=\"wfs-head\"><span class=\"wfs-title\">コメント</span><button class=\"wfs-close\" onclick=\"wfToggleSidebar()\">×</button></div>\n  <div class=\"wfs-body\" id=\"wfs-body\"><div class=\"wfs-empty\">コメントはまだありません</div></div>\n  <div class=\"wfs-footer\"><button class=\"wfs-show-resolved\" onclick=\"wfToggleResolved()\" id=\"wfs-resolved-btn\">解決済みを表示</button></div>\n</div>\n</div>";
+var WFK_STYLE="\n#wf-comment-ui{font-family:'Helvetica Neue','Hiragino Kaku Gothic ProN',sans-serif;font-size:13px;}\n#wf-toolbar{position:fixed;top:0;left:0;right:0;z-index:9000;background:#fff;border-bottom:1px solid #e0e0e0;padding:8px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);overflow-x:auto;}\n@media(max-width:900px){.wft-hint{display:none!important;}}\n#wf-toolbar .wft-label{font-size:10px;font-weight:700;letter-spacing:.2em;color:#bbb;}\n.wft-btn{white-space:nowrap;flex-shrink:0;display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border:1px solid #ddd;background:#fff;color:#555;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;border-radius:4px;transition:all .15s;}\n.wft-btn:hover{border-color:#111;color:#111;}\n.wft-btn.on{background:#111;color:#fff;border-color:#111;}\n.wft-spacer{flex:1;}\n.wft-hint{font-size:11px;color:#bbb;}\n#wf-sidebar{position:fixed;right:0;top:41px;bottom:0;width:260px;background:#fff;border-left:1px solid #e0e0e0;z-index:8900;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .2s;}\n#wf-sidebar.open{transform:translateX(0);}\n.wfs-head{padding:12px 16px;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;justify-content:space-between;}\n.wfs-title{font-size:11px;font-weight:700;letter-spacing:.1em;color:#555;}\n.wfs-close{background:none;border:none;cursor:pointer;font-size:16px;color:#aaa;line-height:1;}\n.wfs-body{flex:1;overflow-y:auto;}\n.wfs-footer{padding:10px 14px;border-top:1px solid #f0f0f0;text-align:right;}\n.wfs-show-resolved{background:none;border:none;font-size:10px;color:#aaa;cursor:pointer;font-family:inherit;padding:0;}\n.wfs-show-resolved:hover{color:#555;}\n.wfs-empty{font-size:12px;color:#bbb;text-align:center;padding:24px 0;}\n.wfs-item{padding:10px 14px;border-bottom:1px solid #f0f0f0;cursor:pointer;display:flex;gap:10px;}\n.wfs-item:hover{background:#fafafa;}\n.wfs-item.active{background:#EBF4FF;}\n.wfs-item.resolved{opacity:.4;}\n.wfs-item.resolved:hover{background:#fafafa;opacity:.6;}\n.wfs-pin{width:22px;height:22px;border-radius:50% 50% 50% 0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;transform:rotate(-45deg);}\n.wfs-pin span{transform:rotate(45deg);}\n.wfs-info{flex:1;min-width:0;}\n.wfs-author{font-size:11px;font-weight:700;color:#222;}\n.wfs-text{font-size:11px;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}\n.wfs-meta{font-size:10px;color:#bbb;margin-top:2px;}\n.wf-pin{position:absolute;width:26px;height:26px;border-radius:50% 50% 50% 0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;cursor:grab;transform:rotate(-45deg);z-index:8000;transition:opacity .15s;user-select:none;}\n.wf-pin span{transform:rotate(45deg);}\n.wf-pin:hover{opacity:.8;}\n.wf-pin:active{cursor:grabbing;}\n.wf-pin.wf-flash{animation:wfFlash .6s ease 3;}\n@keyframes wfFlash{0%,100%{box-shadow:0 0 0 0 rgba(55,138,221,.7);}50%{box-shadow:0 0 0 12px rgba(55,138,221,0);}}\n.wf-pop{position:absolute;z-index:8500;background:#fff;border:1px solid #ddd;border-radius:6px;width:280px;box-shadow:0 4px 16px rgba(0,0,0,.12);max-height:480px;display:flex;flex-direction:column;}\n.wf-pop-head{padding:8px 12px;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}\n.wf-pop-author{font-size:11px;font-weight:700;color:#222;}\n.wf-pop-time{font-size:10px;color:#bbb;}\n.wf-pop-close{background:none;border:none;cursor:pointer;color:#aaa;font-size:15px;line-height:1;}\n.wf-pop-threads{overflow-y:auto;flex:1;}\n.wf-pop-body{padding:10px 12px;border-bottom:1px solid #f0f0f0;}\n.wf-pop-text{font-size:12px;color:#333;line-height:1.6;margin-bottom:8px;word-break:break-all;}\n.wf-pop-actions{display:flex;gap:10px;}\n.wf-pop-resolve{font-size:11px;color:#1D9E75;cursor:pointer;font-weight:700;}\n.wf-pop-delete{font-size:11px;color:#bbb;cursor:pointer;}\n.wf-reply-item{padding:8px 12px;border-bottom:1px solid #f8f8f8;display:flex;gap:8px;}\n.wf-reply-avatar{width:20px;height:20px;border-radius:50%;background:#e0e0e0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#888;flex-shrink:0;}\n.wf-reply-body{flex:1;min-width:0;}\n.wf-reply-author{font-size:10px;font-weight:700;color:#222;}\n.wf-reply-time{font-size:10px;color:#bbb;margin-left:6px;}\n.wf-reply-text{font-size:11px;color:#444;line-height:1.6;margin-top:2px;word-break:break-all;}\n.wf-reply-input{padding:8px 10px;border-top:1px solid #f0f0f0;display:flex;gap:6px;align-items:flex-end;flex-shrink:0;}\n.wf-reply-input textarea{flex:1;border:1px solid #e0e0e0;border-radius:4px;padding:6px 8px;font-size:11px;font-family:inherit;resize:none;min-height:32px;max-height:80px;outline:none;color:#333;line-height:1.5;}\n.wf-reply-input textarea:focus{border-color:#378ADD;}\n.wf-reply-send{width:28px;height:28px;background:#378ADD;border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}\n.wf-reply-send:disabled{background:#ddd;cursor:default;}\n.wf-reply-send svg{width:12px;height:12px;fill:#fff;}\n.wf-input-pop{position:absolute;z-index:8500;background:#fff;border:1px solid #ddd;border-radius:6px;width:260px;box-shadow:0 4px 16px rgba(0,0,0,.12);}\n.wf-input-pop textarea{width:100%;border:none;padding:10px 12px;font-size:12px;font-family:inherit;resize:none;min-height:72px;outline:none;color:#333;display:block;border-radius:6px 6px 0 0;}\n.wf-input-foot{padding:6px 10px;border-top:1px solid #f0f0f0;display:flex;align-items:center;gap:6px;}\n.wf-input-foot-r{margin-left:auto;display:flex;gap:6px;}\n.wf-btn-cancel{background:none;border:1px solid #ddd;padding:4px 10px;font-size:11px;cursor:pointer;font-family:inherit;border-radius:4px;color:#666;}\n.wf-btn-post{background:#111;color:#fff;border:none;padding:4px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;border-radius:4px;}\n.wf-btn-post:disabled{opacity:.3;cursor:default;}\n.wf-img-btn{background:none;border:none;cursor:pointer;padding:2px 4px;color:#bbb;font-size:15px;line-height:1;border-radius:3px;}\n.wf-img-btn:hover{color:#555;background:#f5f5f5;}\n.wf-img-btn svg{display:block;}\n.wf-img-preview{padding:6px 10px;display:flex;flex-wrap:wrap;gap:6px;}\n.wf-img-thumb{position:relative;width:60px;height:60px;}\n.wf-img-thumb img{width:100%;height:100%;object-fit:cover;border-radius:4px;border:1px solid #e0e0e0;}\n.wf-img-thumb-del{position:absolute;top:-5px;right:-5px;width:16px;height:16px;background:#555;color:#fff;border:none;border-radius:50%;font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}\n.wf-comment-img{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;}\n.wf-comment-img img{max-width:100%;max-height:160px;object-fit:cover;border-radius:4px;border:1px solid #e8e8e8;cursor:pointer;}\n.wf-comment-img img:hover{opacity:.85;}\n.wf-reply-img{margin-top:4px;display:flex;flex-wrap:wrap;gap:4px;}\n.wf-reply-img img{max-width:120px;max-height:80px;object-fit:cover;border-radius:3px;border:1px solid #e8e8e8;cursor:pointer;}\n.wf-img-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:99999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;}\n.wf-img-lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:4px;}\n#wf-sp-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:9500;display:flex;flex-direction:column;align-items:center;padding:56px 0 148px;}\n#wf-sp-overlay .wf-sp-bar{display:flex;align-items:center;gap:12px;margin-bottom:14px;color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.6);}\n#wf-sp-overlay .wf-sp-bar button{border:1px solid rgba(255,255,255,.5);background:none;color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:4px;cursor:pointer;font-family:inherit;}\n#wf-sp-overlay .wf-sp-row{display:flex;align-items:stretch;gap:72px;flex:1;min-height:0;}\n#wf-pick{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9800;display:flex;align-items:center;justify-content:center;}\n#wf-pick .box{background:#fff;width:340px;max-height:74vh;display:flex;flex-direction:column;border-radius:6px;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.35);}\n#wf-pick .hd2{padding:16px 20px 12px;border-bottom:1px solid #eee;}\n#wf-pick .hd2 p{font-size:13px;font-weight:700;color:#222;}\n#wf-pick .hd2 span{font-size:11px;color:#999;}\n#wf-pick input[type=\"checkbox\"]{appearance:none;-webkit-appearance:none;width:16px;height:16px;border:1px solid #c8c8c8;background:#fff;margin:0;flex-shrink:0;position:relative;cursor:pointer;transition:background .12s,border-color .12s;}\n#wf-pick input[type=\"checkbox\"]:hover{border-color:#111;}\n#wf-pick input[type=\"checkbox\"]:checked{background:#111;border-color:#111;}\n#wf-pick input[type=\"checkbox\"]:checked::after{content:'';position:absolute;left:5px;top:1px;width:4px;height:9px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg);}\n#wf-pick input[type=\"checkbox\"]:focus-visible{outline:2px solid #111;outline-offset:2px;}\n#wf-pick .modes{display:flex;gap:18px;padding:12px 20px;border-bottom:1px solid #f0f0f0;background:#fafafa;}\n#wf-pick .modes label{padding:0;font-size:12px;font-weight:700;}\n#wf-pick .list{flex:1;overflow-y:auto;padding:8px 0;}\n#wf-pick label{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:13px;color:#333;cursor:pointer;}\n#wf-pick label:hover{background:#f7f7f7;}\n#wf-pick .tools{padding:8px 20px;border-top:1px solid #f0f0f0;display:flex;gap:14px;}\n#wf-pick .tools button{background:none;border:none;font-size:11px;color:#888;cursor:pointer;font-family:inherit;text-decoration:underline;padding:0;}\n#wf-pick .foot{padding:14px 20px;border-top:1px solid #eee;display:flex;gap:10px;justify-content:flex-end;}\n#wf-pick .foot button{font-size:12px;font-weight:700;padding:9px 20px;border-radius:4px;cursor:pointer;font-family:inherit;}\n#wf-pick .foot .go{background:#111;color:#fff;border:none;}\n#wf-pick .foot .cancel{background:#fff;color:#666;border:1px solid #ddd;}\n#wf-sp-overlay .wf-sp-foot{position:absolute;left:0;right:0;bottom:100px;text-align:center;margin:0;}\n#wf-sp-overlay .wf-sp-foot button{border:1px solid rgba(255,255,255,.55);background:none;color:#fff;font-size:12px;font-weight:700;padding:10px 32px;border-radius:4px;cursor:pointer;font-family:inherit;}\n#wf-sp-overlay .wf-sp-foot button:hover{background:rgba(255,255,255,.15);}\n#wf-sp-overlay .wf-sp-row::before{content:'';flex:0 0 190px;}\n@media(max-width:1080px){#wf-sp-nav{display:none;}#wf-sp-overlay .wf-sp-row::before{display:none;}}\n#wf-sp-overlay iframe{width:390px;height:100%;max-height:812px;border:none;background:#fff;box-shadow:0 8px 40px rgba(0,0,0,.4);border-radius:6px;}\n#wf-sp-nav{width:190px;max-height:812px;overflow-y:auto;color:#fff;font-size:13px;padding-top:4px;}\n#wf-sp-nav .ttl{font-size:10px;font-weight:700;letter-spacing:.2em;color:rgba(255,255,255,.5);margin-bottom:14px;}\n#wf-sp-nav a{display:block;padding:9px 14px;color:rgba(255,255,255,.85);text-decoration:none;border-left:2px solid rgba(255,255,255,.2);cursor:pointer;line-height:1.6;}\n#wf-sp-nav a:hover{color:#fff;background:rgba(255,255,255,.12);border-left-color:#fff;}\n.wf-reply-input-row{display:flex;gap:6px;align-items:flex-end;}\n.wf-reply-input-row textarea{flex:1;border:1px solid #e0e0e0;border-radius:4px;padding:6px 8px;font-size:11px;font-family:inherit;resize:none;min-height:32px;max-height:80px;outline:none;color:#333;line-height:1.5;}\n.wf-reply-input-row textarea:focus{border-color:#378ADD;}\n.wfs-reply-count{font-size:10px;color:#378ADD;margin-top:2px;}\n.wf-has-img{font-size:10px;color:#bbb;margin-top:2px;}\nbody.comment-mode{cursor:crosshair;}\nbody.comment-mode a,body.comment-mode button{cursor:crosshair!important;}\n";
+var WFK_UI="<div id=\"wf-comment-ui\">\n<div id=\"wf-toolbar\">\n  <span class=\"wft-label\">WIREFRAME</span>\n  <button class=\"wft-btn on\" id=\"wft-view\" onclick=\"wfSetMode('view')\">閲覧</button>\n  <button class=\"wft-btn\" id=\"wft-comment\" onclick=\"wfSetMode('comment')\">コメント</button>\n  <div class=\"wft-spacer\"></div>\n  <span class=\"wft-hint\" id=\"wft-hint\">クリックでコメントを追加</span>\n  <button class=\"wft-btn\" onclick=\"wfToggleSp()\" id=\"wft-sp-btn\">スマホ表示</button>\n  <button class=\"wft-btn\" onclick=\"wfExportPng()\" id=\"wft-png-btn\">PNG書き出し</button>\n  <button class=\"wft-btn\" onclick=\"wfToggleSidebar()\" id=\"wft-sb-btn\">コメント一覧 (<span id=\"wft-count\">0</span>)</button>\n</div>\n<div id=\"wf-sidebar\">\n  <div class=\"wfs-head\"><span class=\"wfs-title\">コメント</span><button class=\"wfs-close\" onclick=\"wfToggleSidebar()\">×</button></div>\n  <div class=\"wfs-body\" id=\"wfs-body\"><div class=\"wfs-empty\">コメントはまだありません</div></div>\n  <div class=\"wfs-footer\"><button class=\"wfs-show-resolved\" onclick=\"wfToggleResolved()\" id=\"wfs-resolved-btn\">解決済みを表示</button></div>\n</div>\n</div>";
 // 表紙：HTML内の <script id="wf-kit-meta"> の情報から、ページ先頭に表紙を差し込む
 function wfkCover(){
   var metaEl=document.getElementById('wf-kit-meta');
@@ -47,6 +47,61 @@ document.body.insertAdjacentHTML('beforeend',WFK_UI);
 
 (function(){
 const LS=(()=>{try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return localStorage;}catch(e){const m={};return {getItem:k=>(k in m?m[k]:null),setItem:(k,v)=>{m[k]=String(v);},removeItem:k=>{delete m[k];}};}})();
+if(new URLSearchParams(location.search).get('wfsp')==='1'){
+  const ui=document.getElementById('wf-comment-ui');if(ui)ui.remove();
+  // ワイヤーはコメントツールバー(41px)を避けてヘッダーを配置しているため、枠内ではその分を戻す
+  try{
+    [...document.styleSheets].forEach(ss=>{
+      let rules;try{rules=ss.cssRules;}catch(e){return;}
+      [...rules].forEach(r=>{
+        if(r.style&&r.style.top==='41px')r.style.top='0px';
+        if(r.style&&r.style.paddingTop==='41px')r.style.paddingTop='0px';
+      });
+    });
+  }catch(e){}
+  document.querySelectorAll('[style*="41px"]').forEach(el=>{
+    if(el.style.top==='41px')el.style.top='0px';
+    if(el.style.paddingTop==='41px')el.style.paddingTop='0px';
+  });
+  wfCloseMenuOnAnchor();
+  return;
+}
+function wfCloseMenuOnAnchor(){
+  document.addEventListener('click',function(e){
+    const a=e.target.closest('a[href^="#"]');
+    if(!a)return;
+    document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb=>{
+      if(/nav|menu|toggle|burger|drawer/i.test(cb.id||''))cb.checked=false;
+    });
+  });
+}
+wfCloseMenuOnAnchor();
+function wfToggleSp(){
+  const cur=document.getElementById('wf-sp-overlay');
+  if(cur){cur.remove();return;}
+  const u=new URL(location.href);u.searchParams.set('wfsp','1');u.hash='';
+  const secs=[...document.querySelectorAll('section[id]')].filter(x=>x.id==='cover'||x.id.indexOf('page-')===0);
+  let near=null,best=1e9;
+  secs.forEach(x=>{const d=Math.abs(x.getBoundingClientRect().top);if(d<best){best=d;near=x;}});
+  if(near)u.hash=near.id;
+  const pages=secs.filter(x=>x.id!=='cover').map(x=>({id:x.id,label:x.id.replace(/^page-/,'').toUpperCase()==='TOP'?'TOP':x.id.replace(/^page-/,'')}));
+  const navHtml=pages.map(x=>'<a data-sec="'+x.id+'">'+x.label+'</a>').join('');
+  const ov=document.createElement('div');ov.id='wf-sp-overlay';
+  ov.innerHTML='<div class="wf-sp-bar"><span>スマホ表示（390px）</span><button id="wf-sp-png-btn" onclick="wfExportSpPng()">PNG書き出し（SP）</button><span style="font-weight:400;opacity:.7;">※コメントはPC表示で</span></div>'+
+    '<div class="wf-sp-row"><iframe src="'+u.toString()+'"></iframe><div id="wf-sp-nav"><p class="ttl">PAGES</p>'+navHtml+'</div></div>'+
+    '<div class="wf-sp-foot"><button id="wf-sp-close">閉じる ×</button></div>';
+  ov.addEventListener('click',e=>{
+    const a=e.target.closest('#wf-sp-nav a');
+    if(a){
+      const fr=ov.querySelector('iframe');
+      try{fr.contentWindow.location.hash=a.dataset.sec;}catch(err){}
+      return;
+    }
+    if(e.target===ov||e.target.id==='wf-sp-close')ov.remove();
+  });
+  document.body.appendChild(ov);
+}
+window.wfToggleSp=wfToggleSp;
 const WF_ID=document.querySelector('meta[name="wf-id"]')?.content||location.pathname.replace(/[^a-zA-Z0-9\-_]/g,'');
 const NAME_KEY='wf_author_name';
 let mode='view',comments=[],nextId=1,openPopId=null,inputPop=null,showResolved=false;
@@ -93,26 +148,121 @@ async function wfExportPng(){
       await new Promise((res,rej)=>{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s);});
     }catch(e){alert('書き出しライブラリの読み込みに失敗しました。通信環境を確認してください。');btn.textContent='PNG書き出し';return;}
   }
-  const secs=[...document.querySelectorAll('section[id]')].filter(s=>s.id==='cover'||s.id.indexOf('page-')===0);
-  if(!secs.length){alert('ページセクションが見つかりません');btn.textContent='PNG書き出し';return;}
-  const base=(document.querySelector('meta[name="wf-id"]')?.content||'wireframe');
   closePopover();closeInput();
   document.querySelectorAll('.wf-pin').forEach(p=>p.style.display='none');
-  for(let i=0;i<secs.length;i++){
-    btn.textContent=`書き出し中 ${i+1}/${secs.length}`;
-    try{
-      const canvas=await html2canvas(secs[i],{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false});
-      const a=document.createElement('a');
-      a.download=`${base}_${String(i+1).padStart(2,'0')}_${secs[i].id.replace('page-','')}.png`;
-      a.href=canvas.toDataURL('image/png');
-      a.click();
-    }catch(e){console.error('PNG export failed:',secs[i].id,e);}
-    await new Promise(r=>setTimeout(r,400));
+  const secs=[...document.querySelectorAll('section[id]')].filter(x=>x.id==='cover'||x.id.indexOf('page-')===0);
+  const sel=await wfPickSections(secs,{});
+  if(sel){
+    if(sel.modes.pc)await wfCaptureAll(document,btn,'PNG書き出し','',null,{preset:sel});
+    if(sel.modes.sp)await wfCaptureSp(btn,sel.picked.map(x=>x.id));
   }
   document.querySelectorAll('.wf-pin').forEach(p=>p.style.display='');
   btn.textContent='PNG書き出し';
 }
 window.wfExportPng=wfExportPng;
+async function wfCaptureSp(btn,ids){
+  const u=new URL(location.href);u.searchParams.set('wfsp','1');u.hash='';
+  const fr=document.createElement('iframe');
+  fr.style.cssText='position:absolute;left:-99999px;top:0;width:390px;height:900px;border:none;';
+  fr.src=u.toString();
+  document.body.appendChild(fr);
+  btn.textContent='スマホ表示を準備中…';
+  await new Promise(res=>{fr.onload=res;setTimeout(res,8000);});
+  const doc=fr.contentDocument,win=fr.contentWindow;
+  try{
+    await new Promise((res,rej)=>{const sc=doc.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';sc.onload=res;sc.onerror=rej;doc.head.appendChild(sc);});
+  }catch(e){alert('書き出しライブラリの読み込みに失敗しました。');fr.remove();return;}
+  const secs=ids.map(id=>doc.getElementById(id)).filter(el=>el&&doc.defaultView.getComputedStyle(el).display!=='none');
+  if(!secs.length){fr.remove();return;}
+  await wfCaptureAll(doc,btn,'PNG書き出し','sp_',win,{preset:{picked:secs,modes:{sp:true}}});
+  fr.remove();
+}
+window.wfCaptureSp=wfCaptureSp;
+async function wfExportSpPng(){
+  const ov=document.getElementById('wf-sp-overlay');if(!ov)return;
+  const btn=document.getElementById('wf-sp-png-btn');
+  const fr=ov.querySelector('iframe');const doc=fr.contentDocument;const win=fr.contentWindow;
+  if(!win.html2canvas){
+    btn.textContent='準備中…';
+    try{
+      await new Promise((res,rej)=>{const sc=doc.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';sc.onload=res;sc.onerror=rej;doc.head.appendChild(sc);});
+    }catch(e){alert('書き出しライブラリの読み込みに失敗しました。');btn.textContent='PNG書き出し（SP）';return;}
+  }
+  await wfCaptureAll(doc,btn,'PNG書き出し（SP）','sp_',win,{modes:false,defaultMode:'sp'});
+  btn.textContent='PNG書き出し（SP）';
+}
+window.wfExportSpPng=wfExportSpPng;
+function wfPickSections(secs,opts){
+  opts=opts||{};
+  return new Promise(resolve=>{
+    const ov=document.createElement('div');ov.id='wf-pick';
+    const items=secs.map((x,i)=>'<label><input type="checkbox" checked data-i="'+i+'"><span>'+(x.id==='cover'?'表紙':x.id.replace(/^page-/,''))+'</span></label>').join('');
+    const modes=opts.modes===false?'':'<div class="modes"><label><input type="checkbox" id="wf-pick-pc" checked>PC</label><label><input type="checkbox" id="wf-pick-sp">スマホ（390px）</label></div>';
+    ov.innerHTML='<div class="box"><div class="hd2"><p>書き出すページを選択</p><span>チェックしたページをPNGで保存します</span></div>'+
+      modes+
+      '<div class="list">'+items+'</div>'+
+      '<div class="tools"><button data-all="1">すべて選択</button><button data-all="0">すべて解除</button></div>'+
+      '<div class="foot"><button class="cancel">キャンセル</button><button class="go">書き出す</button></div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click',e=>{
+      const all=e.target.getAttribute&&e.target.getAttribute('data-all');
+      if(all!==null&&all!==undefined){ov.querySelectorAll('.list input').forEach(cb=>cb.checked=all==='1');return;}
+      if(e.target.classList.contains('cancel')||e.target===ov){ov.remove();resolve(null);return;}
+      if(e.target.classList.contains('go')){
+        const picked=[...ov.querySelectorAll('.list input')].filter(cb=>cb.checked).map(cb=>secs[+cb.dataset.i]);
+        const pc=ov.querySelector('#wf-pick-pc'),sp=ov.querySelector('#wf-pick-sp');
+        const modes={pc:pc?pc.checked:(opts.defaultMode!=='sp'),sp:sp?sp.checked:(opts.defaultMode==='sp')};
+        ov.remove();
+        resolve(picked.length&&(modes.pc||modes.sp)?{picked:picked,modes:modes}:null);
+      }
+    });
+  });
+}
+async function wfCaptureAll(doc,btn,label,prefix,win,opts){
+  const h2c=(win||window).html2canvas||window.html2canvas;
+  const secs=[...doc.querySelectorAll('section[id]')].filter(s=>(s.id==='cover'||s.id.indexOf('page-')===0)&&(doc.defaultView.getComputedStyle(s).display!=='none'));
+  if(!secs.length){alert('ページセクションが見つかりません');return;}
+  const sel=(opts&&opts.preset)?opts.preset:await wfPickSections(secs,opts);
+  if(!sel)return;
+  const picked=(opts&&opts.preset)?sel.picked.map(x=>doc.getElementById(x.id)||x).filter(Boolean):sel.picked;
+  const idxOf=new Map(secs.map((x,i)=>[x,i]));
+  const base=(document.querySelector('meta[name="wf-id"]')?.content||'wireframe');
+  // セクションの外にある追従ヘッダー（各ページの上に付けて書き出す）
+  const hdr=[...doc.body.children].find(el=>{
+    if(el.id==='wf-comment-ui'||el.tagName==='SCRIPT'||el.tagName==='STYLE')return false;
+    if(el.closest('section[id]'))return false;
+    const ps=doc.defaultView.getComputedStyle(el).position;
+    return (ps==='sticky'||ps==='fixed')&&el.getBoundingClientRect().height>0;
+  });
+  const wrapW=doc.documentElement.clientWidth;
+  try{if(doc.fonts&&doc.fonts.ready)await doc.fonts.ready;}catch(e){}
+  for(let i=0;i<picked.length;i++){
+    btn.textContent=`書き出し中 ${i+1}/${picked.length}`;
+    const wrap=doc.createElement('div');
+    wrap.style.cssText='position:absolute;left:-99999px;top:0;width:'+wrapW+'px;background:#fff;';
+    if(hdr&&picked[i].id!=='cover'){
+      const hc=hdr.cloneNode(true);
+      hc.style.position='static';hc.style.top='auto';
+      wrap.appendChild(hc);
+    }
+    const sc=picked[i].cloneNode(true);
+    // ページ境目のグレー帯は書き出しに不要
+    sc.classList.remove('wf-pgap');
+    sc.style.marginTop='0';sc.style.borderTop='none';
+    wrap.appendChild(sc);
+    doc.body.appendChild(wrap);
+    const target=wrap;
+    try{
+      const canvas=await h2c(target,{scale:2,backgroundColor:'#ffffff',useCORS:true,logging:false,windowWidth:wrapW});
+      const a=document.createElement('a');
+      a.download=`${base}_${prefix}${String(idxOf.get(picked[i])+1).padStart(2,'0')}_${picked[i].id.replace('page-','')}.png`;
+      a.href=canvas.toDataURL('image/png');
+      a.click();
+    }catch(e){console.error('PNG export failed:',picked[i].id,e);}
+    wrap.remove();
+    await new Promise(r=>setTimeout(r,400));
+  }
+}
 document.addEventListener('click',function(e){
   if(mode!=='comment')return;
   if(e.target.closest('.wf-pin,.wf-pop,.wf-input-pop,#wf-toolbar,#wf-sidebar'))return;
